@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 import './App.css';
+import { Grid, Paper } from '@material-ui/core';
 
 function App() {
 
@@ -48,29 +49,29 @@ function App() {
               </AppBar>
             </Box>
         </div>
-        <div className="inputpanel">
-          <Card sx={{ minWidth: 20 }} variant="outlined">
-            <CardContent>
-              <div className="textarea">
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  minRows={10}
-                  placeholder="Enter Text to extract"
-                  onChange={e => setText(e.target.value)}
-                  style={{ width: 600 }}
-                />
-              </div>
-              <div className="inputbutton">
-                <Button 
-                variant="contained"
-                onClick={handleSubmit}>
-                  Assess</Button>
-                </div>
-                <div className="textarea" dangerouslySetInnerHTML={{__html:keywords}}/>
-              </CardContent>
-          </Card>
-          </div>
-          <div className="resultpanel">
+        <Grid container spacing={1}>
+          <Grid item xs={5}>
+            <Paper style={{ height:"100%" }} elevation={3}>
+              <TextareaAutosize
+                    aria-label="minimum height"
+                    minRows={10}
+                    placeholder="Enter Text to extract"
+                    onChange={e => setText(e.target.value)}
+                    style={{ width: 600, height: "100%;" }}/>
+            </Paper>
+            
+          </Grid>
+          <Grid item xs={1}>
+            <Button variant="contained" onClick={handleSubmit}>Assess</Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <div dangerouslySetInnerHTML={{__html:keywords}}/>
+            </Paper>
+            
+          </Grid>
+        </Grid>
+        <div className="resultpanel">
           <Card sx={{ minWidth: 20 }} variant="outlined">
             <CardContent>
               This is the risk
