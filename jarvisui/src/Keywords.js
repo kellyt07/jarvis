@@ -1,4 +1,6 @@
-export function KeyWordsList(){
+export function KeyWordsList(keywordsList){
+
+    console.log(keywordsList.keyword);
 
     return(
         <div>

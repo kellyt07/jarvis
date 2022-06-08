@@ -16,6 +16,7 @@ function App() {
 
   const [text, setText] = useState('');
   const [keywords, setKeywords] = useState('');
+  const [keywordsList, setKeywordsList] = useState({keyword: '', description: ''});
 
   async function getKeywords(){
     var requestOptions = {
@@ -31,9 +32,25 @@ function App() {
       .catch(error => console.log('error', error));
   }
 
+  async function getKeywordsList(){
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    fetch("http://127.0.0.1:5000/jarvis/getkeywords?text=" + encodeURIComponent(text), requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        setKeywordsList(result);
+      })
+      .catch(error => console.log('error', error));
+  }
+
   function handleSubmit(){
     setText(text)
-    getKeywords()
+    getKeywords();
+    getKeywordsList();
   }
 
   return (
@@ -55,7 +72,7 @@ function App() {
                   minRows={10}
                   placeholder="Enter Text to extract"
                   onChange={e => setText(e.target.value)}
-                  style={{ width: "95%", height: "100%;" }}/>
+                  style={{ width: "95%", height: "100%" }}/>
             <Button variant="contained" onClick={handleSubmit}>Assess</Button>
           </Paper>
           
@@ -73,7 +90,7 @@ function App() {
         </Grid>
         <Grid item xs={5}>
           <Paper elevation={3}>
-            <KeyWordsList></KeyWordsList>
+            <KeyWordsList {...keywordsList}/>
           </Paper>
           
         </Grid>
