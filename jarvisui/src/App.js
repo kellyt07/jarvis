@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import TextareaAutosize  from '@material-ui/core/TextareaAutosize';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
@@ -10,10 +10,32 @@ import CardContent from '@material-ui/core/CardContent';
 
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
+function App() {
+
+  const [text, setText] = useState('');
+  const [keywords, setKeywords] = useState('');
+
+  async function getKeywords(){
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    fetch("http://127.0.0.1:5000/jarvis/getkeywordshtml?text=" + encodeURIComponent(text), requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        setKeywords(result);
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  function handleSubmit(){
+    setText(text)
+    getKeywords()
+  }
+
+  return (
+    <div className="App">
         <div className="titleheader">
             <Box sx={{ flexGrow: 1 }}>
               <AppBar position="static" style={{ background: 'black' }}>
@@ -34,22 +56,18 @@ class App extends Component {
                   aria-label="minimum height"
                   minRows={10}
                   placeholder="Enter Text to extract"
+                  onChange={e => setText(e.target.value)}
                   style={{ width: 600 }}
                 />
               </div>
               <div className="inputbutton">
-                <Button variant="contained">
+                <Button 
+                variant="contained"
+                onClick={handleSubmit}>
                   Assess</Button>
                 </div>
-                <div className="textarea">
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  minRows={10}
-                  placeholder="Enter Text to extract"
-                  style={{ width: 600 }}
-                />
-              </div>
-            </CardContent>
+                <div className="textarea" dangerouslySetInnerHTML={{__html:keywords}}/>
+              </CardContent>
           </Card>
           </div>
           <div className="resultpanel">
@@ -60,8 +78,7 @@ class App extends Component {
           </Card>
           </div>
       </div>
-    );
-  }
+  );
 }
 
 export default App;
