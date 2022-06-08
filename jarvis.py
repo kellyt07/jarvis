@@ -5,7 +5,7 @@ class Jarvis:
     def __init__(self, text):
         self.text = text
 
-    def getWords(text):
+    def getKeyWords(text):
         # Load the English tokenizer, tagger, parser and NER
         nlp = spacy.load("en_core_web_sm")
 
@@ -14,12 +14,17 @@ class Jarvis:
         # initialise dictionary that will be passed back
         words = {}
 
+        # Add word and its label/explaination to dict
         for word in doc.ents:
-            words[word.text] = word.label_
-            print (word.text, word.label_)
+            words[word.text] = word.label_ + " - " + spacy.explain(word.label_)
+            print (word)
 
         return words
 
-#print(displacy.render(text, style="ent", jupyter=True))
+    def getKeyWordsHtml(text):
+        # Load the English tokenizer, tagger, parser and NER
+        nlp = spacy.load("en_core_web_sm")
 
-#displacy.serve(text, style="ent")
+        doc = nlp(text)
+
+        return displacy.render(doc, style="ent")
