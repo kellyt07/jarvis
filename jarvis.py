@@ -15,6 +15,7 @@ class Jarvis:
         # Add word and its label/explaination to dict
         for word in doc.ents:
             words[word.text] = word.label_ + " - " + spacy.explain(word.label_)
+            print(word)
         return words
 
     def getKeyWordsHtml(text):
