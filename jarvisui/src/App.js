@@ -100,7 +100,7 @@ function App() {
           </div>
           </Toolbar>
       </AppBar>
-      <Container maxWidth="lg">
+      <div style={{margin: "20px"}}>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <Paper style={{ height:"100%" }} elevation={3}>
@@ -116,7 +116,6 @@ function App() {
         </Grid>
         <Grid item xs={6}>
           <Paper style={{ height:"100%" }} elevation={3}>
-            <div className='resultPanel'>This is the risk</div>
             <div style={{width: "100%", display: "flex", flexDirection: "row"}}>
               <GaugeChart id="gauge-chart2" 
                 nrOfLevels={3} 
@@ -132,20 +131,20 @@ function App() {
               
           </Paper>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={6}>
           <Paper elevation={3}>
             <div dangerouslySetInnerHTML={{__html:keywords}}/>
           </Paper>
           
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <Paper elevation={3}>
             <KeyWordsList {...keywordsList}/>
           </Paper>
           
         </Grid>
       </Grid>
-      </Container>
+      </div>
      
     </div>
   );
