@@ -26,3 +26,8 @@
   text-align: left;
   padding-top: 10px;
 }
+
+.MuiButton-label {
+  color: white;
+  float: right;
+}
