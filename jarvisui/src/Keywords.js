@@ -10,7 +10,7 @@ export function KeyWordsList(keywordsList){
 
     return(
         <div>
-            this will be a list of keywords
+            Keywords Identified:
             {list.map((keyword, index) => (
                 <p>{keyword.keyword}: {keyword.description}</p>
             ))}

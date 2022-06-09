@@ -6,16 +6,41 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Strategy } from './Strategy';
+import GaugeChart from 'react-gauge-chart';
 
 import './App.css';
 import { Container, Grid, Paper } from '@material-ui/core';
-import { Keyword, KeyWordsList } from './Keywords';
+import { KeyWordsList } from './Keywords';
+
+import {CanvasJSChart} from 'canvasjs-react-charts'
+
 
 function App() {
 
   const [text, setText] = useState('');
   const [keywords, setKeywords] = useState('');
   const [keywordsList, setKeywordsList] = useState([]);
+
+  const chartOptions = {
+    animationEnabled: true,
+    title: {
+      text: "Identified Flags"
+    },
+    height: "160",
+    data: [{
+      type: "doughnut",
+      showInLegend: true,
+      indexLabel: "{name}: {y}",
+      yValueFormatString: "#,###'%'",
+      dataPoints: [
+        { name: "NORP ", y: 5 },
+        { name: "PERSON", y: 31 },
+        { name: "ORG", y: 40 },
+        { name: "GPE", y: 17 },
+        { name: "DATE", y: 7 }
+      ]
+    }]
+  };
 
   async function getKeywords(){
     var requestOptions = {
@@ -41,6 +66,7 @@ function App() {
       .then(response => response.json())
       .then(result => {
         setKeywordsList(result);
+
       })
       .catch(error => console.log('error', error));
   }
@@ -79,7 +105,7 @@ function App() {
                   minRows={10}
                   placeholder="Enter Text to extract"
                   onChange={e => setText(e.target.value)}
-                  style={{ width: "95%", height: "100%" }}/>
+                  style={{ width: "95%" }}/>
             <Button variant="contained" onClick={handleSubmit}>Assess</Button>
           </Paper>
           
@@ -87,6 +113,19 @@ function App() {
         <Grid item xs={6}>
           <Paper style={{ height:"100%" }} elevation={3}>
             <div className='resultPanel'>This is the risk</div>
+            <div style={{width: "100%", display: "flex", flexDirection: "row"}}>
+              <GaugeChart id="gauge-chart2" 
+                nrOfLevels={3} 
+                percent={0.86} 
+                textColor={"black"}
+                style={{ width: "50%"}}
+              />
+              <div style={{ width: "50%"}}>
+                <CanvasJSChart options = {chartOptions}/>
+              </div>
+            </div>
+              
+              
           </Paper>
         </Grid>
         <Grid item xs={7}>
