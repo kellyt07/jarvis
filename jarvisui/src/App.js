@@ -10,13 +10,13 @@ import CardContent from '@material-ui/core/CardContent';
 
 import './App.css';
 import { Container, Grid, Paper } from '@material-ui/core';
-import { KeyWordsList } from './Keywords';
+import { Keyword, KeyWordsList } from './Keywords';
 
 function App() {
 
   const [text, setText] = useState('');
   const [keywords, setKeywords] = useState('');
-  const [keywordsList, setKeywordsList] = useState({keyword: '', description: ''});
+  const [keywordsList, setKeywordsList] = useState([]);
 
   async function getKeywords(){
     var requestOptions = {
@@ -41,7 +41,6 @@ function App() {
     fetch("http://127.0.0.1:5000/jarvis/getkeywords?text=" + encodeURIComponent(text), requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         setKeywordsList(result);
       })
       .catch(error => console.log('error', error));
