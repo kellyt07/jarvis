@@ -57,11 +57,15 @@ function App() {
     navigate('/Strategy');
   };
 
+  function navigateHome () {
+    navigate('/');
+  };
+
    return (
     <div className="App">
       <AppBar position="static" style={{ background: 'black' }}>
         <Toolbar>
-          <img src={require('./jarvis_image.png')} alt="jarvis" width="50" height="50"></img>
+          <img src={require('./jarvis_image.png')} alt="jarvis" width="50" height="50" onClick={navigateHome} style={{cursor: 'pointer'}}></img>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{ flex: 1 }}>
             JARVIS
           </Typography>
